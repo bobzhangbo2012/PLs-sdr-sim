@@ -5,6 +5,7 @@ import os
 from ftplib import FTP
 from time import sleep
 import datetime
+# import gps_sdr_sim_uhd
 
 def welcome():
 	os.system("clear")
@@ -58,6 +59,12 @@ def hackrf():
 	print("\t\033[92m[*] Executing hackrf_transfer...\033[0m")
 	os.execvp(args[0], args)
 
+def usrp_transfer_sim():
+	args = ["python","gps-sdr-sim-uhd.py","-t", "gpssim.bin", "-s", "2500000", "-x", "40"]
+	print ("args[0:8]:", args[0:8])
+	print (args[0], args)
+	print("\t\033[92m[*] Executing usrp_transfer...\033[0m")
+	os.execvp(args[0], args)
 
 def main():
 	welcome()
@@ -109,9 +116,16 @@ def main():
 	hackrfTrigger = input("\t[?] Do you want to run hackrf_transfer? ([y]/n) > ") or "y"
 	if hackrfTrigger == "y" or hackrfTrigger == "Y":
 		hackrf()
-	else:
-		print("\t\033[91m[-] Exiting...\033[00m\n")
-		exit(0)
+	# else:
+		# print("\t\033[91m[-] Exiting...\033[00m\n")
+		# exit(0)
+	usrpTrigger = input("\t[?] Do you want to run usrp_transfer? ([y]/n) > ") or "y"
+	if usrpTrigger == "y" or usrpTrigger == "Y":
+		usrp_transfer_sim()
+	# else:
+	print("\t\033[91m[-] Exiting...\033[00m\n")
+	exit(0)
+
 try:
 	main()
 except KeyboardInterrupt:
